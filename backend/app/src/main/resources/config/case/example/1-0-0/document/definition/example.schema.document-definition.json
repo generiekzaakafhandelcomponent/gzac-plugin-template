@@ -1,0 +1,16 @@
+{
+    "$id": "example.schema",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Example",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Name"
+        },
+        "greeting": {
+            "type": "string",
+            "description": "Greeting set by the example plugin"
+        }
+    }
+}
