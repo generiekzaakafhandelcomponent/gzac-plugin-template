@@ -75,7 +75,7 @@ jobs:
       - run: npm install
         working-directory: frontend
 
-      - run: npm run build --workspace=${{ matrix.value }}
+      - run: npm run build --workspace=projects/${{ matrix.value }}
         working-directory: frontend
 
       - name: Publish
