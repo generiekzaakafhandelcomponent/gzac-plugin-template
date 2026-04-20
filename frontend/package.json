@@ -5,8 +5,8 @@
         "node": ">=20.0.0 <23.0.0"
     },
     "scripts": {
-        "build": "node --max_old_space_size=5048 ./node_modules/@angular/cli/bin/ng build --output-path=deployment/dist",
-        "buildDev": "node --max_old_space_size=5048 ./node_modules/@angular/cli/bin/ng build --prod --configuration=dev --output-path=deployment/dist",
+        "build": "node --max_old_space_size=5048 ./node_modules/@angular/cli/bin/ng build --output-path=dist",
+        "buildDev": "node --max_old_space_size=5048 ./node_modules/@angular/cli/bin/ng build --prod --configuration=dev --output-path=dist",
         "clean": "npx rimraf@6 dist .angular node_modules package-lock.json",
         "e2e": "ng e2e",
         "libs-build-all": "npm run build --workspaces",
