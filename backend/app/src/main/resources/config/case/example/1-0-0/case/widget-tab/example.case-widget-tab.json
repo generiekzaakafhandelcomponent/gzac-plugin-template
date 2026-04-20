@@ -5,16 +5,16 @@
             {
                 "type": "fields",
                 "key": "process-variable-result",
-                "title": "Example Plugin Result",
+                "title": "Sample Plugin Result",
                 "width": 2,
                 "highContrast": true,
                 "properties": {
                     "columns": [
                         [
                             {
-                                "key": "greeting",
-                                "title": "Greeting",
-                                "value": "doc:/greeting",
+                                "key": "apiResult",
+                                "title": "API Result",
+                                "value": "doc:/apiResult",
                                 "displayProperties": {
                                     "type": "text",
                                     "hideWhenEmpty": false

@@ -15,25 +15,25 @@
  */
 
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from "@angular/core";
-import {FunctionConfigurationComponent, FunctionConfigurationData} from "@valtimo/plugin";
+import {PluginConfigurationComponent, PluginConfigurationData} from "@valtimo/plugin";
 import {BehaviorSubject, combineLatest, Observable, Subscription, take} from "rxjs";
-import {SetProcessVariableConfig} from "../../models";
+import {SamplePluginConfig} from "../../models";
 
 @Component({
   standalone: false,
-  selector: "valtimo-set-process-variable",
-  templateUrl: "./set-process-variable.component.html",
+  selector: "valtimo-sample-plugin-configuration",
+  templateUrl: "./sample-plugin-configuration.component.html",
 })
-export class SetProcessVariableComponent implements FunctionConfigurationComponent, OnInit, OnDestroy {
+export class SamplePluginConfigurationComponent implements PluginConfigurationComponent, OnInit, OnDestroy {
   @Input() save$!: Observable<void>;
   @Input() disabled$!: Observable<boolean>;
   @Input() pluginId!: string;
-  @Input() prefillConfiguration$!: Observable<SetProcessVariableConfig>;
+  @Input() prefillConfiguration$!: Observable<SamplePluginConfig>;
   @Output() valid: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() configuration: EventEmitter<FunctionConfigurationData> = new EventEmitter<FunctionConfigurationData>();
+  @Output() configuration: EventEmitter<PluginConfigurationData> = new EventEmitter<PluginConfigurationData>();
 
   private saveSubscription!: Subscription;
-  private readonly formValue$ = new BehaviorSubject<SetProcessVariableConfig | null>(null);
+  private readonly formValue$ = new BehaviorSubject<SamplePluginConfig | null>(null);
   private readonly valid$ = new BehaviorSubject<boolean>(false);
 
   ngOnInit(): void {
@@ -44,13 +44,13 @@ export class SetProcessVariableComponent implements FunctionConfigurationCompone
     this.saveSubscription?.unsubscribe();
   }
 
-  formValueChange(formValue: SetProcessVariableConfig): void {
+  formValueChange(formValue: SamplePluginConfig): void {
     this.formValue$.next(formValue);
     this.handleValid(formValue);
   }
 
-  private handleValid(formValue: SetProcessVariableConfig): void {
-    const valid = !!(formValue.variableName && formValue.variableValue);
+  private handleValid(formValue: SamplePluginConfig): void {
+    const valid = !!(formValue.configurationTitle && formValue.apiUrl);
     this.valid$.next(valid);
     this.valid.emit(valid);
   }

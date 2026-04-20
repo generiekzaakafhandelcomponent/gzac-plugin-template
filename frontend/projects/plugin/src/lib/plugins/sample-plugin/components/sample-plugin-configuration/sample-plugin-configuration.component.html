@@ -14,12 +14,6 @@
   ~ limitations under the License.
   -->
 
-<p class="cds--label">
-  This action sets a process variable to a given value during execution. Configure the variable name
-  and the value it should be set to. The value can be a static string or a value resolved from the
-  document using a value resolver (e.g. <code>doc:/customer/name</code>).
-</p>
-
 <v-form
   (valueChange)="formValueChange($event)"
   *ngIf="{
@@ -28,24 +22,23 @@
   } as obs"
 >
   <v-input
-    name="variableName"
-    [title]="'variableName' | pluginTranslate: pluginId | async"
+    name="configurationTitle"
+    [title]="'configurationTitle' | pluginTranslate: pluginId | async"
     [margin]="true"
     [disabled]="obs.disabled"
-    [defaultValue]="obs.prefill?.variableName"
+    [defaultValue]="obs.prefill?.configurationTitle"
     [required]="true"
-    [tooltip]="'variableNameTooltip' | pluginTranslate: pluginId | async"
     [widthPx]="350"
+    placeholder="Sample Plugin"
   >
   </v-input>
   <v-input
-    name="variableValue"
-    [title]="'variableValue' | pluginTranslate: pluginId | async"
+    name="apiUrl"
+    [title]="'apiUrl' | pluginTranslate: pluginId | async"
     [margin]="true"
     [disabled]="obs.disabled"
-    [defaultValue]="obs.prefill?.variableValue"
+    [defaultValue]="obs.prefill?.apiUrl"
     [required]="true"
-    [tooltip]="'variableValueTooltip' | pluginTranslate: pluginId | async"
     [widthPx]="350"
   >
   </v-input>

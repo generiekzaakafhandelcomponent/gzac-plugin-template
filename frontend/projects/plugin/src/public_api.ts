@@ -15,11 +15,11 @@
  */
 
 /*
- * Public API Surface of example
+ * Public API Surface of sample-plugin
  */
 
-export * from "./lib/plugins/example/models";
-export * from "./lib/plugins/example/example-plugin-module";
-export * from "./lib/plugins/example/example-plugin.specification";
-export * from "./lib/plugins/example/components/example-configuration/example-configuration.component";
-export * from "./lib/plugins/example/components/set-process-variable/set-process-variable.component";
+export * from "./lib/plugins/sample-plugin/models";
+export * from "./lib/plugins/sample-plugin/sample-plugin-module";
+export * from "./lib/plugins/sample-plugin/sample-plugin.specification";
+export * from "./lib/plugins/sample-plugin/components/sample-plugin-configuration/sample-plugin-configuration.component";
+export * from "./lib/plugins/sample-plugin/components/sample-action-configuration/sample-action-configuration.component";

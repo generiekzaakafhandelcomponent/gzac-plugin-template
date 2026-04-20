@@ -16,12 +16,10 @@
 
 import {PluginConfigurationData} from "@valtimo/plugin";
 
-interface ExamplePluginConfig extends PluginConfigurationData {
+interface SamplePluginConfig extends PluginConfigurationData {
+  apiUrl: string;
 }
 
-interface SetProcessVariableConfig {
-  variableName: string;
-  variableValue: string;
-}
+interface SampleActionConfig {}
 
-export {ExamplePluginConfig, SetProcessVariableConfig};
+export {SamplePluginConfig, SampleActionConfig};

@@ -6,7 +6,7 @@
             "type": "htmlelement",
             "input": false,
             "label": "Instructions",
-            "content": "Start a new example case. The example plugin will set a process variable during execution.",
+            "content": "Start a new example case. The sample plugin will call a Time API during execution.",
             "tableView": false,
             "refreshOnChange": false
         },

@@ -14,23 +14,4 @@
   ~ limitations under the License.
   -->
 
-<v-form
-  (valueChange)="formValueChange($event)"
-  *ngIf="{
-    disabled: disabled$ | async,
-    prefill: prefillConfiguration$ ? (prefillConfiguration$ | async) : null
-  } as obs"
->
-  <v-input
-    name="configurationTitle"
-    [title]="'configurationTitle' | pluginTranslate: pluginId | async"
-    [margin]="true"
-    [disabled]="obs.disabled"
-    [defaultValue]="obs.prefill?.configurationTitle"
-    [required]="true"
-    [tooltip]="'configurationTitleTooltip' | pluginTranslate: pluginId | async"
-    [widthPx]="350"
-    placeholder="Example Plugin"
-  >
-  </v-input>
-</v-form>
+<p>{{ 'actionDescription' | pluginTranslate: pluginId | async }}</p>

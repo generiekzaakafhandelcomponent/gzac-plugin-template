@@ -15,7 +15,7 @@
  */
 
 dockerCompose {
-    setProjectName("example")
+    setProjectName("sample-plugin")
     isRequiredBy(project.tasks.integrationTesting)
 
     tasks.integrationTesting {
@@ -34,6 +34,7 @@ dependencies {
     compileOnly("com.ritense.valtimo:contract")
     compileOnly("org.operaton.bpm:operaton-engine:$operatonVersion")
     compileOnly("org.springframework.boot:spring-boot-autoconfigure")
+    compileOnly("org.springframework.boot:spring-boot-starter-web")
 
     compileOnly("io.github.oshai:kotlin-logging:$kotlinLoggingVersion")
 

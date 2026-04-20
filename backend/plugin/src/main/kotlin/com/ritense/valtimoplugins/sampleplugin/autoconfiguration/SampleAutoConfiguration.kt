@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package com.ritense.valtimoplugins.example.plugin
+package com.ritense.valtimoplugins.sampleplugin.autoconfiguration
 
-import com.ritense.plugin.PluginFactory
 import com.ritense.plugin.service.PluginService
-import org.springframework.stereotype.Component
+import com.ritense.valtimoplugins.sampleplugin.client.SampleClient
+import com.ritense.valtimoplugins.sampleplugin.client.SampleService
+import com.ritense.valtimoplugins.sampleplugin.plugin.SamplePluginFactory
+import org.springframework.boot.autoconfigure.AutoConfiguration
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.web.client.RestClient
 
-@Component
-class ExamplePluginFactory(
-    pluginService: PluginService,
-) : PluginFactory<ExamplePlugin>(pluginService) {
+@AutoConfiguration
+class SampleAutoConfiguration {
 
-    override fun create(): ExamplePlugin {
-        return ExamplePlugin()
-    }
 }

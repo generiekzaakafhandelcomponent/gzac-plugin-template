@@ -14,11 +14,4 @@
  * limitations under the License.
  */
 
-package com.ritense.valtimoplugins.example.autoconfiguration
-
-import org.springframework.boot.autoconfigure.AutoConfiguration
-
-@AutoConfiguration
-class ExampleAutoConfiguration {
-
-}
+export * from "./sample-plugin-logo";

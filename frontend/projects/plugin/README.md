@@ -1,1 +1,1 @@
-This is the example plugin.
+This is the sample plugin.

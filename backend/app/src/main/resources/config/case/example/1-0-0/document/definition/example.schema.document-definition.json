@@ -8,9 +8,9 @@
             "type": "string",
             "description": "Name"
         },
-        "greeting": {
+        "apiResult": {
             "type": "string",
-            "description": "Greeting set by the example plugin"
+            "description": "Result from the sample plugin Time API call"
         }
     }
 }

@@ -4,7 +4,7 @@
 
 ## Overview
 
-Describe what your plugin does and what problem it solves.
+This is a sample plugin demonstrating an API call action. It fetches data from a time API endpoint.
 
 ## Dependencies
 
@@ -12,7 +12,7 @@ Describe what your plugin does and what problem it solves.
 
 ```kotlin
 dependencies {
-    implementation("com.ritense.valtimoplugins:example:8.1.0")
+    implementation("com.ritense.valtimoplugins:sample-plugin:0.0.1")
 }
 ```
 
@@ -21,7 +21,7 @@ dependencies {
 ```json
 {
   "dependencies": {
-    "@valtimo-plugins/example": "8.1.0"
+    "@valtimo-plugins/sample-plugin": "0.0.1"
   }
 }
 ```
@@ -30,18 +30,18 @@ In your `app.module.ts`:
 
 ```typescript
 import {
-    ExamplePluginModule, examplePluginSpecification,
-} from '@valtimo-plugins/example';
+    SamplePluginModule, samplePluginSpecification,
+} from '@valtimo-plugins/sample-plugin';
 
 @NgModule({
     imports: [
-        ExamplePluginModule,
+        SamplePluginModule,
     ],
     providers: [
         {
             provide: PLUGIN_TOKEN,
             useValue: [
-                examplePluginSpecification,
+                samplePluginSpecification,
             ]
         }
     ]
@@ -52,15 +52,15 @@ import {
 
 List the plugin configuration properties and how to set them.
 
-| Property | Type | Required | Description |
-|----------|------|----------|-------------|
-|          |      |          |             |
+| Property | Type   | Required | Description                          |
+|----------|--------|----------|--------------------------------------|
+| apiUrl   | string | Yes      | The URL of the time API to call      |
 
 ## Actions
 
-### Action Name
+### Time API test action
 
-Describe what this action does, when it runs, and what parameters it accepts.
+Sends a GET request to the configured API URL and returns the timezone response.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|

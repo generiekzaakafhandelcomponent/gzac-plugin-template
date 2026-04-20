@@ -18,13 +18,13 @@ import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {PluginTranslatePipeModule} from "@valtimo/plugin";
 import {FormModule, InputModule as ValtimoInputModule} from "@valtimo/components";
-import {ExampleConfigurationComponent} from "./components/example-configuration/example-configuration.component";
-import {SetProcessVariableComponent} from "./components/set-process-variable/set-process-variable.component";
+import {SamplePluginConfigurationComponent} from "./components/sample-plugin-configuration/sample-plugin-configuration.component";
+import {SampleActionConfigurationComponent} from "./components/sample-action-configuration/sample-action-configuration.component";
 
 @NgModule({
-  declarations: [ExampleConfigurationComponent, SetProcessVariableComponent],
+  declarations: [SamplePluginConfigurationComponent, SampleActionConfigurationComponent],
   imports: [CommonModule, PluginTranslatePipeModule, FormModule, ValtimoInputModule],
-  exports: [ExampleConfigurationComponent, SetProcessVariableComponent],
+  exports: [SamplePluginConfigurationComponent, SampleActionConfigurationComponent],
 })
-export class ExamplePluginModule {
+export class SamplePluginModule {
 }

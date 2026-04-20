@@ -1,13 +1,13 @@
 # Plugin Template
 
-A minimal example plugin for Valtimo. Use this project as a template to create your own plugin.
+A sample plugin for Valtimo demonstrating an API call action. Use this project as a template to create your own plugin.
 
 **Contact:** `<your-name-here>`
 
-## Example Plugin
+## Sample Plugin
 
-This project contains a single example plugin with one action: **Set Process Variable**.
-It demonstrates the minimal setup required for a Valtimo plugin with both a backend and frontend.
+This project contains a sample plugin with one action: **Time API test action**.
+It demonstrates a plugin that calls an external API endpoint and returns the response.
 
 ## Documentation
 

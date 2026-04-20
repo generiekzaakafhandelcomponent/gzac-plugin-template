@@ -6,15 +6,12 @@
         "formDefinitionName": "start-form-example"
     },
     {
-        "activityId": "set-variable-task",
+        "activityId": "time-api-sample-action",
         "activityType": "bpmn:ServiceTask:start",
         "processLinkType": "plugin",
-        "pluginDefinitionKey": "example",
-        "pluginActionDefinitionKey": "set-process-variable",
+        "pluginDefinitionKey": "sample-plugin",
+        "pluginActionDefinitionKey": "time-api-sample-action",
         "pluginConfigurationId": "4ac9a49f-4aeb-4f91-86d9-853fd95a1b33",
-        "actionProperties": {
-            "variableName": "greeting",
-            "variableValue": "Hello from the Example Plugin!"
-        }
+        "actionProperties": {}
     }
 ]

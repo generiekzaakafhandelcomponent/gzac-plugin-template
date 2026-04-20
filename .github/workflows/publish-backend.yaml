@@ -56,22 +56,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check plugin name
-        id: check-name
-        run: |
-          PROPS="${{ matrix.value }}/plugin.properties"
-          if [ -f "$PROPS" ]; then
-            ARTIFACT_ID=$(grep '^pluginArtifactId=' "$PROPS" | cut -d'=' -f2)
-            if [ "$ARTIFACT_ID" = "example" ]; then
-              echo "::warning::Plugin artifactId is still 'example'. Skipping publish."
-              echo "is_example=true" >> $GITHUB_OUTPUT
-            else
-              echo "is_example=false" >> $GITHUB_OUTPUT
-            fi
-          else
-            echo "is_example=false" >> $GITHUB_OUTPUT
-          fi
-
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
@@ -111,11 +95,9 @@ jobs:
         run: ./gradlew ${{ steps.gradleIntegrationTestTaskAlize.outputs.TASK_NAME }}
 
       - name: Publish
-        if: steps.check-name.outputs.is_example != 'true'
         run: ./gradlew ${{ steps.gradleTaskAlize.outputs.TASK_NAME }}
         env:
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
           SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
           SONATYPE_USR: ${{ secrets.SONATYPE_USR }}
           SONATYPE_PSW: ${{ secrets.SONATYPE_PSW }}
-

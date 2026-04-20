@@ -14,6 +14,14 @@
  * limitations under the License.
  */
 
-package com.ritense.valtimoplugins.example
+package com.ritense.valtimoplugins.sampleplugin
 
-abstract class BaseTest
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.runApplication
+
+@SpringBootApplication
+class TestApplication
+
+fun main(args: Array<String>) {
+    runApplication<TestApplication>(*args)
+}

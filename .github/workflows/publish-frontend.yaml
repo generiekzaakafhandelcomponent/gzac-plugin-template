@@ -51,22 +51,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check plugin name
-        id: check-name
-        run: |
-          PKG="frontend/projects/${{ matrix.value }}/package.json"
-          if [ -f "$PKG" ]; then
-            NAME=$(node -p "require('./$PKG').name")
-            if [ "$NAME" = "@valtimo-plugins/example" ]; then
-              echo "::warning::Plugin name is still '@valtimo-plugins/example'. Skipping publish."
-              echo "is_example=true" >> $GITHUB_OUTPUT
-            else
-              echo "is_example=false" >> $GITHUB_OUTPUT
-            fi
-          else
-            echo "is_example=false" >> $GITHUB_OUTPUT
-          fi
-
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -79,7 +63,6 @@ jobs:
         working-directory: frontend
 
       - name: Publish
-        if: steps.check-name.outputs.is_example != 'true'
         run: npm publish ${{ matrix.value }}/dist --access public
         working-directory: frontend
         env:
