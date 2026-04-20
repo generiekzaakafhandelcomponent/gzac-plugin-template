@@ -22,6 +22,7 @@
         <bpmn:endEvent id="end-event" name="Process ended">
             <bpmn:extensionElements>
                 <camunda:executionListener expression="${valueResolverDelegateService.handleValue(execution, 'doc:/apiResult', execution.getVariable('apiResult'))}" event="start"/>
+                <camunda:executionListener expression="${valueResolverDelegateService.handleValue(execution, 'doc:/message', execution.getVariable('message'))}" event="start"/>
             </bpmn:extensionElements>
             <bpmn:incoming>Flow_2</bpmn:incoming>
         </bpmn:endEvent>

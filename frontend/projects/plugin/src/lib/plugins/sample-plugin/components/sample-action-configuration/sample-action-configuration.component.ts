@@ -16,7 +16,7 @@
 
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from "@angular/core";
 import {FunctionConfigurationComponent, FunctionConfigurationData} from "@valtimo/plugin";
-import {Observable, Subscription} from "rxjs";
+import {BehaviorSubject, combineLatest, Observable, Subscription, switchMap, take} from "rxjs";
 import {SampleActionConfig} from "../../models";
 
 @Component({
@@ -33,19 +33,37 @@ export class SampleActionConfigurationComponent implements FunctionConfiguration
   @Output() configuration: EventEmitter<FunctionConfigurationData> = new EventEmitter<FunctionConfigurationData>();
 
   private saveSubscription!: Subscription;
+  private readonly formValue$ = new BehaviorSubject<SampleActionConfig | null>(null);
+  private readonly valid$ = new BehaviorSubject<boolean>(false);
 
-  ngOnInit(): void {
-    this.valid.emit(true);
+  public ngOnInit(): void {
     this.openSaveSubscription();
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.saveSubscription?.unsubscribe();
   }
 
+  public formValueChange(formValue: SampleActionConfig): void {
+    this.formValue$.next(formValue);
+    this.handleValid(formValue);
+  }
+
+  private handleValid(formValue: SampleActionConfig): void {
+    const valid = !!formValue.message;
+    this.valid$.next(valid);
+    this.valid.emit(valid);
+  }
+
   private openSaveSubscription(): void {
-    this.saveSubscription = this.save$?.subscribe(() => {
-      this.configuration.emit({});
-    });
+    this.saveSubscription = this.save$
+      ?.pipe(
+        switchMap(() => combineLatest([this.formValue$, this.valid$]).pipe(take(1)))
+      )
+      .subscribe(([formValue, valid]) => {
+        if (valid) {
+          this.configuration.emit(formValue!);
+        }
+      });
   }
 }

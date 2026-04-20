@@ -14,4 +14,23 @@
   ~ limitations under the License.
   -->
 
-<p>{{ 'actionDescription' | pluginTranslate: pluginId | async }}</p>
+<p style="margin-bottom: 1.5rem">{{ 'actionDescription' | pluginTranslate: pluginId | async }}</p>
+
+<v-form
+  (valueChange)="formValueChange($event)"
+  *ngIf="{
+    disabled: disabled$ | async,
+    prefill: prefillConfiguration$ ? (prefillConfiguration$ | async) : null
+  } as obs"
+>
+  <v-input
+    name="message"
+    [title]="'message' | pluginTranslate: pluginId | async"
+    [margin]="true"
+    [defaultValue]="obs.prefill?.message"
+    [disabled]="obs.disabled"
+    [required]="true"
+    [widthPx]="350"
+  >
+  </v-input>
+</v-form>

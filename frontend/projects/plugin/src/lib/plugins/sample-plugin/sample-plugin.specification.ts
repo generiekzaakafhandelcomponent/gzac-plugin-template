@@ -33,7 +33,8 @@ const samplePluginSpecification: PluginSpecification = {
       description: "Dit is een voorbeeld plugin die beschikt over een API call action.",
       configurationTitle: "Configuratienaam",
       apiUrl: "API URL",
-      actionDescription: "Deze actie roept de geconfigureerde Time API aan en slaat het resultaat op als procesvariabele. Er zijn geen extra parameters nodig.",
+      actionDescription: "Deze actie roept de geconfigureerde Time API aan en slaat het resultaat op als procesvariabele.",
+      message: "Bericht",
     },
     en: {
       title: "Sample Plugin",
@@ -41,7 +42,8 @@ const samplePluginSpecification: PluginSpecification = {
       description: "This is a sample plugin demonstrating an API call action.",
       configurationTitle: "Configuration Name",
       apiUrl: "API URL",
-      actionDescription: "This action calls the configured Time API and stores the result as a process variable. No additional parameters are required.",
+      actionDescription: "This action calls the configured Time API and stores the result as a process variable.",
+      message: "Message",
     },
   },
 };

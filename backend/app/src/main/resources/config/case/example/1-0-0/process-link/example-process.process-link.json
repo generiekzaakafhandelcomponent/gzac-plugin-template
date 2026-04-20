@@ -12,6 +12,8 @@
         "pluginDefinitionKey": "sample-plugin",
         "pluginActionDefinitionKey": "time-api-sample-action",
         "pluginConfigurationId": "4ac9a49f-4aeb-4f91-86d9-853fd95a1b33",
-        "actionProperties": {}
+        "actionProperties": {
+            "message": "Hello from the sample plugin!"
+        }
     }
 ]

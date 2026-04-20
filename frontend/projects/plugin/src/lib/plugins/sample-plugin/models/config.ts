@@ -20,6 +20,8 @@ interface SamplePluginConfig extends PluginConfigurationData {
   apiUrl: string;
 }
 
-interface SampleActionConfig {}
+interface SampleActionConfig {
+  message: string;
+}
 
 export {SamplePluginConfig, SampleActionConfig};

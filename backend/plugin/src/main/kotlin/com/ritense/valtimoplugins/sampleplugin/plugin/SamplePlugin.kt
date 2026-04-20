@@ -18,6 +18,7 @@ package com.ritense.valtimoplugins.sampleplugin.plugin
 
 import com.ritense.plugin.annotation.Plugin
 import com.ritense.plugin.annotation.PluginAction
+import com.ritense.plugin.annotation.PluginActionProperty
 import com.ritense.plugin.annotation.PluginProperty
 import com.ritense.processlink.domain.ActivityTypeWithEventName.SERVICE_TASK_START
 import com.ritense.valtimoplugins.sampleplugin.client.SampleService
@@ -52,10 +53,11 @@ open class SamplePlugin(
         description = "Time API plugin action",
         activityTypes = [SERVICE_TASK_START],
     )
-    open fun getCurrentTime(execution: DelegateExecution): String {
+    open fun getCurrentTime(execution: DelegateExecution, @PluginActionProperty message: String): String {
         try {
             val result = sampleService.printAPIResults(apiUrl = apiUrl)
-            logger.info { result }
+            logger.info { "Message: $message, Result: $result" }
+            execution.setVariable("message", message)
             execution.setVariable("apiResult", result)
             return result
         } catch (e: Exception) {

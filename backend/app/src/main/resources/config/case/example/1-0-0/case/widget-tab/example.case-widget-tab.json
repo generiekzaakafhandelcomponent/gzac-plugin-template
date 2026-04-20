@@ -12,6 +12,24 @@
                     "columns": [
                         [
                             {
+                                "key": "name",
+                                "title": "Name",
+                                "value": "doc:/name",
+                                "displayProperties": {
+                                    "type": "text",
+                                    "hideWhenEmpty": false
+                                }
+                            },
+                            {
+                                "key": "message",
+                                "title": "Message",
+                                "value": "doc:/message",
+                                "displayProperties": {
+                                    "type": "text",
+                                    "hideWhenEmpty": false
+                                }
+                            },
+                            {
                                 "key": "apiResult",
                                 "title": "API Result",
                                 "value": "doc:/apiResult",
