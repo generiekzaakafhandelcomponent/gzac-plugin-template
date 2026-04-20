@@ -1,18 +1,16 @@
-# Plugin Template
+# GZAC Plugin Template
 
-A sample plugin for Valtimo demonstrating an API call action. Use this project as a template to create your own plugin.
+A template repository for building your own GZAC plugins. Copy this project to get a ready-made structure with build
+configuration, CI/CD workflows, and a working example to start from.
 
-**Contact:** `<your-name-here>`
+## Getting started
 
-## Sample Plugin
-
-This project contains a sample plugin with one action: **Time API test action**.
-It demonstrates a plugin that calls an external API endpoint and returns the response.
+1. Copy or fork this repository
+2. Rename the sample plugin package, module, and configuration to match your plugin
+3. Follow the [Getting Started](documentation/getting-started.md) guide for setup and development instructions
 
 ## Documentation
 
-For detailed documentation, see the [documentation](documentation/) directory:
-
 - [Getting Started](documentation/getting-started.md) — setup and development instructions
 - [Example Application](documentation/example-application.md) — running the example app locally
-- [Plugin Documentation](documentation/plugin.md) — document your own plugin here
+- [Sample Plugin](documentation/plugin.md) — reference implementation included in this template
