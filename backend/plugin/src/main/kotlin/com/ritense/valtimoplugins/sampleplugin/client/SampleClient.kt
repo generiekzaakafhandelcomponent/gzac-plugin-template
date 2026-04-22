@@ -23,8 +23,8 @@ import org.springframework.web.client.RestClient
 class SampleClient(
     private val restClient: RestClient = RestClient.create(),
 ) {
-    fun fetchTimeAPI(apiUrl: String): ApiResponse {
-        return try {
+    fun fetchTimeAPI(apiUrl: String): ApiResponse =
+        try {
             val response =
                 restClient
                     .get()
@@ -42,5 +42,4 @@ class SampleClient(
         } catch (e: Exception) {
             ApiResponse(error = "Error: ${e.message}")
         }
-    }
 }

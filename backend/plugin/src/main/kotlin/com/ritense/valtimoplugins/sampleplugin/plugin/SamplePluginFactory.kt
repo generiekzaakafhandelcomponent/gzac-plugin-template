@@ -30,7 +30,5 @@ class SamplePluginFactory(
     pluginService: PluginService,
     val sampleService: SampleService,
 ) : PluginFactory<SamplePlugin>(pluginService) {
-    override fun create(): SamplePlugin {
-        return SamplePlugin(sampleService)
-    }
+    override fun create(): SamplePlugin = SamplePlugin(sampleService)
 }

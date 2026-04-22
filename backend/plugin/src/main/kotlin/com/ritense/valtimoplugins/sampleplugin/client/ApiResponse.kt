@@ -17,6 +17,7 @@
 package com.ritense.valtimoplugins.sampleplugin.client
 
 import org.springframework.http.ResponseEntity
+
 data class Timezone(
     val year: Int? = null,
     val month: Int? = null,

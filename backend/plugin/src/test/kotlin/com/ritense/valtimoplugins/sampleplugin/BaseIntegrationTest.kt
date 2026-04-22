@@ -29,7 +29,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @ExtendWith(value = [SpringExtension::class, LiquibaseRunnerExtension::class])
 @Tag("integration")
 abstract class BaseIntegrationTest : BaseTest() {
-
     @MockitoBean
     lateinit var userManagementService: UserManagementService
 

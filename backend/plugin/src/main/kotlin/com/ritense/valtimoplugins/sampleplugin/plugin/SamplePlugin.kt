@@ -53,7 +53,10 @@ open class SamplePlugin(
         description = "Time API plugin action",
         activityTypes = [SERVICE_TASK_START],
     )
-    open fun getCurrentTime(execution: DelegateExecution, @PluginActionProperty message: String): String {
+    open fun getCurrentTime(
+        execution: DelegateExecution,
+        @PluginActionProperty message: String,
+    ): String {
         try {
             val result = sampleService.printAPIResults(apiUrl = apiUrl)
             logger.info { "Message: $message, Result: $result" }

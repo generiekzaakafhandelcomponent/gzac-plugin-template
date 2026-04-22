@@ -16,16 +16,7 @@
 
 package com.ritense.valtimoplugins.sampleplugin.autoconfiguration
 
-import com.ritense.plugin.service.PluginService
-import com.ritense.valtimoplugins.sampleplugin.client.SampleClient
-import com.ritense.valtimoplugins.sampleplugin.client.SampleService
-import com.ritense.valtimoplugins.sampleplugin.plugin.SamplePluginFactory
 import org.springframework.boot.autoconfigure.AutoConfiguration
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
-import org.springframework.context.annotation.Bean
-import org.springframework.web.client.RestClient
 
 @AutoConfiguration
-class SampleAutoConfiguration {
-
-}
+class SampleAutoConfiguration

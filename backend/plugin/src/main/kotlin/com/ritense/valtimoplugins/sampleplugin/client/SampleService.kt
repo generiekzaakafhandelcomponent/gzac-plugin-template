@@ -30,6 +30,7 @@ class SampleService(
         }
 
         val tz = apiResponse.result?.body
-        return "Timezone: ${tz?.timeZone}, DateTime: ${tz?.dateTime}, DayOfWeek: ${tz?.dayOfWeek}, HTTP Status: ${apiResponse.responseStatus}"
+        return "Timezone: ${tz?.timeZone}, DateTime: ${tz?.dateTime}, " +
+            "DayOfWeek: ${tz?.dayOfWeek}, HTTP Status: ${apiResponse.responseStatus}"
     }
 }
