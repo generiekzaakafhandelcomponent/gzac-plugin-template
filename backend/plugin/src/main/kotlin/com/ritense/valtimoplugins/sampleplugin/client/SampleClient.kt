@@ -16,9 +16,11 @@
 
 package com.ritense.valtimoplugins.sampleplugin.client
 
+import com.ritense.valtimo.contract.annotation.SkipComponentScan
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestClient
 
+@SkipComponentScan
 @Component
 class SampleClient(
     private val restClient: RestClient = RestClient.create(),

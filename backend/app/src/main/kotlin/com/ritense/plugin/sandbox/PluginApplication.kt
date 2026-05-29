@@ -21,7 +21,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import java.net.InetAddress
 
-@SpringBootApplication(scanBasePackages = ["com.ritense.*"])
+@SpringBootApplication
 class PluginApplication {
     companion object {
         private val logger = KotlinLogging.logger {}

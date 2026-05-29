@@ -16,8 +16,10 @@
 
 package com.ritense.valtimoplugins.sampleplugin.client
 
+import com.ritense.valtimo.contract.annotation.SkipComponentScan
 import org.springframework.stereotype.Service
 
+@SkipComponentScan
 @Service
 class SampleService(
     private val sampleClient: SampleClient,

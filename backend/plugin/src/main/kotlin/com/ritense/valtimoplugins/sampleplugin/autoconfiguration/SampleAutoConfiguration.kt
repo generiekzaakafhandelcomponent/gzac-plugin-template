@@ -16,7 +16,29 @@
 
 package com.ritense.valtimoplugins.sampleplugin.autoconfiguration
 
+import com.ritense.plugin.service.PluginService
+import com.ritense.valtimoplugins.sampleplugin.client.SampleClient
+import com.ritense.valtimoplugins.sampleplugin.client.SampleService
+import com.ritense.valtimoplugins.sampleplugin.plugin.SamplePluginFactory
 import org.springframework.boot.autoconfigure.AutoConfiguration
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
 
 @AutoConfiguration
-class SampleAutoConfiguration
+class SampleAutoConfiguration {
+
+    @Bean
+    @ConditionalOnMissingBean(SampleClient::class)
+    fun sampleClient(): SampleClient = SampleClient()
+
+    @Bean
+    @ConditionalOnMissingBean(SampleService::class)
+    fun sampleService(sampleClient: SampleClient): SampleService = SampleService(sampleClient)
+
+    @Bean
+    @ConditionalOnMissingBean(SamplePluginFactory::class)
+    fun samplePluginFactory(
+        pluginService: PluginService,
+        sampleService: SampleService,
+    ): SamplePluginFactory = SamplePluginFactory(pluginService, sampleService)
+}
