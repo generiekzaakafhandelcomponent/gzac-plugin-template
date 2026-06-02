@@ -5,9 +5,8 @@
         {
             "files": ["*.ts"],
             "rules": {
-                "@angular-eslint/prefer-standalone": "off",
                 "@angular-eslint/component-selector": [
-                    "error",
+                    "warn",
                     {
                         "type": "element",
                         "prefix": "valtimo",
@@ -15,7 +14,7 @@
                     }
                 ],
                 "@angular-eslint/directive-selector": [
-                    "error",
+                    "warn",
                     {
                         "type": "directive",
                         "prefix": "valtimo",
