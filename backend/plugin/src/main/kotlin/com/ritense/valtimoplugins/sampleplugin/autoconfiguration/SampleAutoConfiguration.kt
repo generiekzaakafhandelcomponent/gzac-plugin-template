@@ -26,7 +26,6 @@ import org.springframework.context.annotation.Bean
 
 @AutoConfiguration
 class SampleAutoConfiguration {
-
     @Bean
     @ConditionalOnMissingBean(SampleClient::class)
     fun sampleClient(): SampleClient = SampleClient()
