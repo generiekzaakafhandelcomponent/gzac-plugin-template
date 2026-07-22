@@ -11,7 +11,29 @@ on:
       - 'settings.gradle.kts'
       - '!**/*.md'
 jobs:
+  # Determine whether an Anthropic API key is configured for this repository.
+  # The Claude review is optional: repositories without ANTHROPIC_API_KEY simply
+  # skip it instead of getting a failing PR check.
+  check-secret:
+    runs-on: ubuntu-latest
+    outputs:
+      has_key: ${{ steps.check.outputs.has_key }}
+    steps:
+      - name: Check for ANTHROPIC_API_KEY
+        id: check
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -n "$ANTHROPIC_API_KEY" ]; then
+            echo "has_key=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_key=false" >> "$GITHUB_OUTPUT"
+            echo "ANTHROPIC_API_KEY is not configured; skipping Claude PR review." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
   PR_Ritense:
+    needs: check-secret
+    if: ${{ needs.check-secret.outputs.has_key == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
