@@ -13,7 +13,21 @@ You meticulously review pull requests involving plugin implementations to guaran
 
 ## Review Methodology
 
-### Step 1: Backend Plugin Analysis
+### Step 1: Plugin Metadata Validation (valtimo-configurator-metadata.json)
+Locate `valtimo-configurator-metadata.json` at the repository root and verify:
+- It is valid JSON (the format has no comments; any `#` annotations belong only in documentation examples, not the real file).
+- Required fields are present: `name`, `version`, `backend`, `frontend`.
+- `version` is exactly `1`.
+- `name` is a non-empty string identifying the plugin under review.
+- `backend` is a non-empty array; each entry has an `import` field of the form `com.ritense.valtimoplugins:<artifactId>`, where the groupId is always `com.ritense.valtimoplugins` (per `gradle/publishing.gradle`) and `<artifactId>` matches the actual backend Gradle module for this plugin (check `settings.gradle.kts` and the module's folder name/`dockerCompose` project name).
+- `frontend.import` matches the `name` field in that plugin's Angular library `package.json` (e.g. `frontend/projects/plugin/package.json`), in the form `@valtimo-plugins/<package-name>`.
+- `frontend.codeAdditions` is a non-empty array; for each entry:
+  - `spec` matches an exported `PluginSpecification` constant name in the plugin's `*.specification.ts` file.
+  - `module` matches an exported Angular module class name in the plugin's `*-module.ts` file.
+- If `editions` is present, it is an array containing only recognized Valtimo Editions (currently `gzac`).
+- No unrelated/unknown top-level fields are present.
+
+### Step 2: Backend Plugin Analysis
 First, identify and catalog all plugin configurations in the backend:
 - Check for properly mapped Spring autoconfiguration in the main/resources/META-INF/spring folder
 - Locate plugin definition files (typically in configuration, registry, or plugin directories)
@@ -21,21 +35,21 @@ First, identify and catalog all plugin configurations in the backend:
 - Document all arguments/parameters for each action, including types and required/optional status
 - Note any metadata, validation rules, or constraints defined for actions
 
-### Step 2: Frontend Specification Analysis
+### Step 3: Frontend Specification Analysis
 Next, examine the frontend plugin specifications:
 - Find the frontend plugin configuration/specification files
 - Identify all `functionConfigurationComponent` mappings
 - Verify each mapping points to an existing Angular component
 - Check that mapped components exist in the codebase
 
-### Step 3: Angular Component Verification
+### Step 4: Angular Component Verification
 For each mapped Angular component:
 - Verify the component class implements the `FunctionConfigurationComponent` interface
 - Check that required interface methods are properly implemented
 - Validate that the component handles all arguments defined in the backend action
 - Ensure proper typing alignment between backend argument definitions and frontend form controls
 
-### Step 4: Cross-Reference Validation
+### Step 5: Cross-Reference Validation
 Perform systematic cross-referencing:
 - For EACH backend plugin action, confirm a corresponding `functionConfigurationComponent` exists
 - For EACH frontend component mapping, verify the backend action exists
@@ -45,6 +59,10 @@ Perform systematic cross-referencing:
 ## What to Report
 
 ### Critical Issues (Must Fix)
+- `valtimo-configurator-metadata.json` missing, not valid JSON, or missing a required field (`name`, `version`, `backend`, `frontend`)
+- `backend[].import` in the metadata file not matching the actual `com.ritense.valtimoplugins:<artifactId>` Gradle coordinate of the plugin module
+- `frontend.import` in the metadata file not matching the plugin's Angular library `package.json` name
+- `frontend.codeAdditions[].spec`/`.module` in the metadata file not matching an actually exported specification constant/module class
 - Backend actions missing `functionConfigurationComponent` mappings
 - `functionConfigurationComponent` pointing to non-existent Angular components
 - Angular components that don't implement `FunctionConfigurationComponent` interface
@@ -52,6 +70,7 @@ Perform systematic cross-referencing:
 - Missing required arguments in frontend component implementations
 
 ### Warnings (Should Review)
+- `editions` in `valtimo-configurator-metadata.json` present but containing an unrecognized edition, or omitted when the plugin is clearly edition-specific
 - Argument type mismatches between backend and frontend
 - Optional arguments in backend not handled in frontend
 - Deprecated patterns or inconsistent naming conventions
@@ -96,6 +115,7 @@ Structure your review as follows:
 ## Self-Verification Checklist
 
 Before finalizing your review for a plugin, confirm:
+- [ ] `valtimo-configurator-metadata.json` has been validated against the actual backend Gradle coordinates and frontend package/specification/module names
 - [ ] All backend plugin files have been examined
 - [ ] All frontend specification files for the specific plugin have been examined
 - [ ] Each backend action has been cross-referenced with frontend
