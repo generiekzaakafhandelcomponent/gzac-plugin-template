@@ -9,6 +9,7 @@ on:
       - 'backend/plugin/**'
       - 'build.gradle.kts'
       - 'settings.gradle.kts'
+      - 'valtimo-configurator-metadata.json'
       - '!**/*.md'
 jobs:
   # Determine whether an Anthropic API key is configured for this repository.
