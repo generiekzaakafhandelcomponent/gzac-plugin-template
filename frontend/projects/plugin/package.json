@@ -1,7 +1,7 @@
 {
     "name": "@valtimo-plugins/sample-plugin",
     "license": "EUPL-1.2",
-    "version": "0.0.2",
+    "version": "0.0.1",
     "scripts": {
         "build": "ng build @valtimo-plugins/sample-plugin",
         "watch": "ng build @valtimo-plugins/sample-plugin --watch"
