@@ -1,3 +1,5 @@
+import org.gradle.declarative.dsl.schema.FqName.Empty.packageName
+
 /*
  * Copyright 2026 Ritense BV, the Netherlands.
  *
@@ -27,6 +29,10 @@ val kotlinLoggingVersion: String by project
 val mockitoKotlinVersion: String by project
 val valtimoVersion: String by project
 val operatonVersion: String by project
+
+plugins {
+    id("org.openapi.generator") version "7.23.0"
+}
 
 dependencies {
     compileOnly("com.ritense.valtimo:plugin-valtimo")
@@ -60,3 +66,50 @@ dependencies {
 }
 
 apply(from = "gradle/publishing.gradle")
+
+openApiGenerate {
+    generatorName = "kotlin"
+    inputSpec.set("$rootDir/backend/plugin/src/main/resources/sampleplugin-openapi.yaml")
+    outputDir.set("${getLayout().buildDirectory.get()}/generated")
+    packageName = "com.ritense.valtimoplugins.sampleplugin.client"
+    generateApiDocumentation = false
+    generateApiTests = false
+    generateModelDocumentation = false
+    generateModelTests = false
+    configOptions =
+        mapOf(
+            "library" to "jvm-spring-restclient",
+            "serializationLibrary" to "jackson",
+            "useSpringBoot3" to "true",
+        )
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir("${getLayout().buildDirectory.get()}/generated/src/main")
+        }
+    }
+}
+
+tasks.named("compileKotlin") {
+    dependsOn(
+        "openApiGenerate",
+    )
+}
+
+tasks.named("sourcesJar") {
+    dependsOn(
+        "openApiGenerate",
+    )
+}
+
+tasks.withType<org.jlleitschuh.gradle.ktlint.tasks.BaseKtLintCheckTask>().configureEach {
+    mustRunAfter("openApiGenerate")
+}
+
+configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+    filter {
+        exclude { it.file.path.contains("/build/") }
+    }
+}
