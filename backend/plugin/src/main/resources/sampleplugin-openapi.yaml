@@ -1,0 +1,391 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: PIV Adapter API
+  description: Een REST interface om verzoeken om Uittreksels, BinnenVerhuizing of een Buitenverhuizing te sturen naar PIV.
+servers:
+  - url: /esuite/pivadapter
+paths:
+  /v1/uittrekselAanvraag:
+    post:
+      description: Verzoek om 1 of meer uittreksels aan te vragen bij PIV
+      operationId: uittrekselAanvraag
+      tags:
+        - uittreksel
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Uittrekselaanvraag"
+      responses:
+        '204':
+          description: Bericht ontvangen en doorgezet naar PIV.
+        '400':
+          description: Payload voldoet niet aan schema
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+        '500':
+          description: Interne fout. Probeer het later nog eens
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+  /v1/binnenVerhuisAanvraag:
+    post:
+      description: Verzoek om een binnengemeentelijke verhuizing te sturen naar PIV
+      operationId: binnenVerhuisAanvraag
+      tags:
+        - binnenVerhuis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BinnengemeentelijkeVerhuisAanvraag"
+      responses:
+        '204':
+          description: Bericht ontvangen en doorgezet naar PIV.
+        '400':
+          description: Payload voldoet niet aan schema
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+        '500':
+          description: Interne fout. Probeer het later nog eens
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+  /v1/buitenVerhuisAanvraag:
+    post:
+      description: Verzoek om een buitengemeentelijke verhuizing te sturen naar PIV
+      operationId: buitenVerhuisAanvraag
+      tags:
+        - buitenVerhuis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BuitengemeentelijkeVerhuisAanvraag"
+      responses:
+        '204':
+          description: Bericht ontvangen en doorgezet naar PIV.
+        '400':
+          description: Payload voldoet niet aan schema
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+        '500':
+          description: Interne fout. Probeer het later nog eens
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+  /v1/status:
+    get:
+      description: Test of de verbinging met dit endpoint in orde is
+      operationId: status
+      tags:
+        - status
+      responses:
+        200:
+          description: Status informatie over dit endpoint
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Status"
+        '500':
+          description: Interne fout. Probeer het later nog eens
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+components:
+  schemas:
+    BinnengemeentelijkeVerhuisAanvraag:
+      type: object
+      required:
+        - zaakgegevens
+        - aanvraaggegevens
+        - contactgegevens
+      properties:
+        zaakgegevens:
+          $ref: "#/components/schemas/ZaakGegevens"
+        aanvraaggegevens:
+          $ref: "#/components/schemas/BinnenVerhuisaanvraagGegevens"
+        contactgegevens:
+          $ref: "#/components/schemas/Contactgegevens"
+    BuitengemeentelijkeVerhuisAanvraag:
+      type: object
+      required:
+        - zaakgegevens
+        - aanvraaggegevens
+        - contactgegevens
+      properties:
+        zaakgegevens:
+          $ref: "#/components/schemas/ZaakGegevens"
+        aanvraaggegevens:
+          $ref: "#/components/schemas/BuitenVerhuisaanvraagGegevens"
+        contactgegevens:
+          $ref: "#/components/schemas/Contactgegevens"
+    Uittrekselaanvraag:
+      type: object
+      required:
+        - zaakgegevens
+        - aanvraaggegevens
+        - contactgegevens
+      properties:
+        zaakgegevens:
+          $ref: "#/components/schemas/ZaakGegevens"
+        aanvraaggegevens:
+          type: array
+          minItems: 1
+          maxItems: 99
+          items:
+            $ref: "#/components/schemas/UittrekselaanvraagGegeven"
+        contactgegevens:
+          $ref: "#/components/schemas/Contactgegevens"
+    Status:
+      type: object
+      required:
+        - application
+        - version
+      properties:
+        application:
+          type: string
+        version:
+          type: string
+    ZaakGegevens:
+      type: object
+      required:
+        - zaakID
+        - datumAanvraag
+      properties:
+        zaakID:
+          type: string
+          maxLength: 50
+        datumAanvraag:
+          type: string
+          format: date
+    Adresgegevens:
+      type: object
+      required:
+        - postcode
+        - huisnummer
+      properties:
+        postcode:
+          type: string
+          pattern: ^[1-9][0-9]{3}[A-Z]{2}$
+        huisnummer:
+          type: integer
+          minimum: 1
+          maximum: 9999999
+        huisletter:
+          type: string
+          maxLength: 1
+        huisaanduiding:
+          $ref: "#/components/schemas/Huisaanduiding"
+        huistoevoeging:
+          type: string
+          maxLength: 4
+        functieAdres:
+          $ref: "#/components/schemas/FunctieAdres"
+    HuidigeAdresgegevens:
+      type: object
+      required:
+        - straatnaam
+        - postcode
+        - huisnummer
+      properties:
+        straatnaam:
+          type: string
+          minLength: 1
+          maxLength: 24
+        postcode:
+          type: string
+          pattern: ^[1-9][0-9]{3}[A-Z]{2}$
+        huisnummer:
+          type: integer
+          minimum: 1
+          maximum: 9999999
+        huisletter:
+          type: string
+          maxLength: 1
+        huisaanduiding:
+          $ref: "#/components/schemas/Huisaanduiding"
+        huistoevoeging:
+          type: string
+          maxLength: 4
+    BinnenVerhuisaanvraagGegevens:
+      type: object
+      required:
+        - burgerservicenummerAanvrager
+        - verhuisdatum
+        - indicatieInwonend
+        - adresgegevens
+      properties:
+        burgerservicenummerAanvrager:
+          type: string
+          pattern: ^[0-9]{8}[0-9]?$
+        verhuisdatum:
+          type: string
+          format: date
+        indicatieInwonend:
+          type: boolean
+        adresgegevens:
+          $ref: "#/components/schemas/Adresgegevens"
+        meeverhuizerBsns:
+          type: array
+          items:
+            type: string
+            pattern: ^[0-9]{8}[0-9]?$
+    BuitenVerhuisaanvraagGegevens:
+      type: object
+      required:
+        - burgerservicenummerAanvrager
+        - gemeentecodeAanvrager
+        - verhuisdatum
+        - indicatieInwonend
+        - huidigeAdresgegevens
+        - adresgegevens
+      properties:
+        burgerservicenummerAanvrager:
+          type: string
+          pattern: ^[0-9]{8}[0-9]?$
+        gemeentecodeAanvrager:
+          type: string
+          pattern: ^[0-9][0-9]?[0-9]?[0-9]?$
+        verhuisdatum:
+          type: string
+          format: date
+        indicatieInwonend:
+          type: boolean
+        huidigeAdresgegevens:
+          $ref: "#/components/schemas/HuidigeAdresgegevens"
+        adresgegevens:
+          $ref: "#/components/schemas/Adresgegevens"
+        buitengemeentelijkeMeeverhuizers:
+          type: array
+          maxItems: 99
+          minItems: 0
+          items:
+            $ref: "#/components/schemas/BuitengemeentelijkeMeeverhuizer"
+    Contactgegevens:
+      type: object
+      required:
+        - emailadres
+        - telefoonnummerPrive
+      properties:
+        emailadres:
+          type: string
+          format: email
+          maxLength: 200
+          pattern: ^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$
+        telefoonnummerPrive:
+          type: string
+          maxLength: 20
+          pattern: ^((\w{1,20})|.{0})$
+        telefoonnummerWerk:
+          type: string
+          maxLength: 20
+          pattern: ^((\w{1,20})|.{0})$
+        telefoonnummerMobiel:
+          type: string
+          maxLength: 20
+          pattern: ^((\w{1,20})|.{0})$
+    UittrekselaanvraagGegeven:
+      type: object
+      required:
+        - burgerservicenummer
+        - uittrekselcode
+      properties:
+        burgerservicenummer:
+          type: string
+          pattern: ^[0-9]{8}[0-9]?$
+        uittrekselcode:
+          type: string
+          pattern: ^[0-9][0-9]?[0-9]?$
+        indicatieGratis:
+          type: boolean
+    FunctieAdres:
+      type: string
+      enum:
+        - Woonadres
+        - Briefadres
+    Huisaanduiding:
+      type: string
+      enum:
+        - Tegenover
+        - Bij
+    BuitengemeentelijkeMeeverhuizer:
+      type: object
+      required:
+        - bsn
+        - omschrijvingAangifte
+      properties:
+        bsn:
+          type: string
+          pattern: ^[0-9]{8}[0-9]?$
+        omschrijvingAangifte:
+          $ref: "#/components/schemas/OmschrijvingAangifte"
+    OmschrijvingAangifte:
+      type: string
+      enum:
+        - Gezaghouder
+        - MeerderjarigInwonendKind
+        - MeerderjarigeGemachtigde
+        - Partner
+        - InwonendeOuderMeerderjarigKind
+    ValidationError:
+      type: object
+      required:
+        - field
+        - message
+      properties:
+        field:
+          type: string
+          description: The name or path of the field that failed validation.
+          example: aanvraaggegevens[2].uittrekselcode
+        message:
+          type: string
+          description: A human-readable message describing the validation failure.
+          example: must match "^[0-9][0-9]?[0-9]?$"
+    ProblemDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+          description: A URI reference that identifies the problem type
+        title:
+          type: string
+          description: A short summary of the problem
+        status:
+          type: integer
+          format: int32
+          description: HTTP status code
+        detail:
+          type: string
+          description: Detailed explanation of the problem
+        instance:
+          type: string
+          format: uri
+          description: URI reference identifying the specific occurrence
+        timestamp:
+          type: string
+          format: date-time
+          description: The time at which the error occurred, in ISO 8601 format.
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          description: Only present when a validation error occurs. Contains a list of validation errors.
+      required:
+        - title
+        - status
