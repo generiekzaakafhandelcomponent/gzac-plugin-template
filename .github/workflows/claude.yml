@@ -13,23 +13,23 @@ on:
       - '!**/*.md'
 jobs:
   # Determine whether an Anthropic API key is configured for this repository.
-  # The Claude review is optional: repositories without ANTHROPIC_API_KEY simply
+  # The Claude review is optional: repositories without PLUGIN_ANTHROPIC_API_KEY simply
   # skip it instead of getting a failing PR check.
   check-secret:
     runs-on: ubuntu-latest
     outputs:
       has_key: ${{ steps.check.outputs.has_key }}
     steps:
-      - name: Check for ANTHROPIC_API_KEY
+      - name: Check for PLUGIN_ANTHROPIC_API_KEY
         id: check
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.PLUGIN_ANTHROPIC_API_KEY }}
         run: |
-          if [ -n "$ANTHROPIC_API_KEY" ]; then
+          if [ -n "$PLUGIN_ANTHROPIC_API_KEY" ]; then
             echo "has_key=true" >> "$GITHUB_OUTPUT"
           else
             echo "has_key=false" >> "$GITHUB_OUTPUT"
-            echo "ANTHROPIC_API_KEY is not configured; skipping Claude PR review." >> "$GITHUB_STEP_SUMMARY"
+            echo "PLUGIN_ANTHROPIC_API_KEY is not configured; skipping Claude PR review." >> "$GITHUB_STEP_SUMMARY"
           fi
 
   PR_Ritense:
@@ -82,7 +82,7 @@ jobs:
         id: claude_review
         uses: anthropics/claude-code-action@v1
         with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          anthropic_api_key: ${{ secrets.PLUGIN_ANTHROPIC_API_KEY }}
           path_to_claude_code_executable: ${{ env.CLAUDE_PATH }}
           track_progress: true
           claude_args: |
