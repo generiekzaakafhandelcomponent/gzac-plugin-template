@@ -20,6 +20,8 @@ Locate `valtimo-configurator-metadata.json` at the repository root and verify:
 - `version` is exactly `1`.
 - `name` is a non-empty string identifying the plugin under review.
 - `backend` is a non-empty array; each entry has an `import` field of the form `com.ritense.valtimoplugins:<artifactId>`, where the groupId is always `com.ritense.valtimoplugins` (per `gradle/publishing.gradle`) and `<artifactId>` matches the actual backend Gradle module for this plugin (check `settings.gradle.kts` and the module's folder name/`dockerCompose` project name).
+- The `<artifactId>` in `backend[].import` exactly matches the `pluginArtifactId` value in `backend/plugin/plugin.properties`.
+- The groupId in `backend[].import` exactly matches the `pluginGroupId` value in `backend/plugin/plugin.properties`.
 - `frontend.import` matches the `name` field in that plugin's Angular library `package.json` (e.g. `frontend/projects/plugin/package.json`), in the form `@valtimo-plugins/<package-name>`.
 - `frontend.codeAdditions` is a non-empty array; for each entry:
   - `spec` matches an exported `PluginSpecification` constant name in the plugin's `*.specification.ts` file.
@@ -61,6 +63,8 @@ Perform systematic cross-referencing:
 ### Critical Issues (Must Fix)
 - `valtimo-configurator-metadata.json` missing, not valid JSON, or missing a required field (`name`, `version`, `backend`, `frontend`)
 - `backend[].import` in the metadata file not matching the actual `com.ritense.valtimoplugins:<artifactId>` Gradle coordinate of the plugin module
+- `backend[].import` artifactId in the metadata file not matching `pluginArtifactId` in `backend/plugin/plugin.properties`
+- `backend[].import` groupId in the metadata file not matching `pluginGroupId` in `backend/plugin/plugin.properties`
 - `frontend.import` in the metadata file not matching the plugin's Angular library `package.json` name
 - `frontend.codeAdditions[].spec`/`.module` in the metadata file not matching an actually exported specification constant/module class
 - Backend actions missing `functionConfigurationComponent` mappings
