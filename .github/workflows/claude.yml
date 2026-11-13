@@ -23,7 +23,7 @@ jobs:
       - name: Check for PLUGIN_ANTHROPIC_API_KEY
         id: check
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.PLUGIN_ANTHROPIC_API_KEY }}
+          PLUGIN_ANTHROPIC_API_KEY: ${{ secrets.PLUGIN_ANTHROPIC_API_KEY }}
         run: |
           if [ -n "$PLUGIN_ANTHROPIC_API_KEY" ]; then
             echo "has_key=true" >> "$GITHUB_OUTPUT"
